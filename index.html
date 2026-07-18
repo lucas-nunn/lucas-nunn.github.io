@@ -22,125 +22,488 @@
     --mono:ui-monospace,"SF Mono","SFMono-Regular",Menlo,"Cascadia Code","Roboto Mono",Consolas,"DejaVu Sans Mono",monospace;
   }
   @media (prefers-color-scheme:light){
-    :root{--ink:#ece7df;--void:#e3ddd3;--slate:#d8d1c6;--steel:#b7ad9f;--ash:#8a8175;--fog:#4a443c;--bone:#141210;--core:#141210;--hair:rgba(20,16,12,.16);--hover:rgba(20,16,12,.05);--glow:rgba(20,16,12,0)}
+    :root{
+      --ink:#ece7df;--void:#e3ddd3;--slate:#d8d1c6;--steel:#b7ad9f;--ash:#8a8175;--fog:#4a443c;
+      --bone:#141210;--core:#141210;--hair:rgba(20,16,12,.16);--hover:rgba(20,16,12,.05);--glow:rgba(20,16,12,0);
+    }
   }
-  :root[data-theme="light"]{--ink:#ece7df;--void:#e3ddd3;--slate:#d8d1c6;--steel:#b7ad9f;--ash:#8a8175;--fog:#4a443c;--bone:#141210;--core:#141210;--hair:rgba(20,16,12,.16);--hover:rgba(20,16,12,.05);--glow:rgba(20,16,12,0)}
-  :root[data-theme="dark"]{--ink:#060505;--void:#0b0a09;--slate:#161311;--steel:#2a2521;--ash:#7a726a;--fog:#c0b8ae;--bone:#efeae1;--core:#fdf7ec;--hair:rgba(192,184,174,.14);--hover:rgba(192,184,174,.05);--glow:rgba(253,247,236,.22)}
+  :root[data-theme="light"]{
+    --ink:#ece7df;--void:#e3ddd3;--slate:#d8d1c6;--steel:#b7ad9f;--ash:#8a8175;--fog:#4a443c;
+    --bone:#141210;--core:#141210;--hair:rgba(20,16,12,.16);--hover:rgba(20,16,12,.05);--glow:rgba(20,16,12,0);
+  }
+  :root[data-theme="dark"]{
+    --ink:#060505;--void:#0b0a09;--slate:#161311;--steel:#2a2521;--ash:#7a726a;--fog:#c0b8ae;
+    --bone:#efeae1;--core:#fdf7ec;--hair:rgba(192,184,174,.14);--hover:rgba(192,184,174,.05);--glow:rgba(253,247,236,.22);
+  }
 
   *{box-sizing:border-box}
-  html{-webkit-text-size-adjust:100%}
-  body{margin:0;background:var(--ink);color:var(--bone);font-family:var(--mono);line-height:1.5;letter-spacing:.01em;overflow-x:hidden;-webkit-font-smoothing:antialiased}
+  html{-webkit-text-size-adjust:100%;height:100%}
+  body{
+    margin:0;min-height:100%;background:var(--ink);color:var(--bone);
+    font-family:var(--mono);line-height:1.5;letter-spacing:.01em;
+    overflow-x:hidden;-webkit-font-smoothing:antialiased;
+  }
   a{color:inherit;text-decoration:none}
   a:focus-visible{outline:1px solid var(--bone);outline-offset:4px}
-  #bg{position:fixed;inset:0;z-index:0;pointer-events:none}
 
-  /* ---- shared building blocks ---- */
-  h1{margin:0;font-weight:600;letter-spacing:-.025em;color:var(--bone);text-shadow:0 0 40px var(--glow);line-height:.95;font-size:clamp(2.7rem,6.5vw,4.8rem)}
-  .tag{font-size:.6rem;letter-spacing:.3em;text-transform:uppercase;color:var(--ash)}
-  .tag b{color:var(--fog);font-weight:400}
-  .about{font-size:clamp(.8rem,1vw,.92rem);letter-spacing:.03em;line-height:1.72;color:var(--fog);margin:0;max-width:44ch}
+  #bg{
+    position:fixed;inset:0;z-index:0;width:100%;height:100%;
+    display:block;pointer-events:none;
+  }
+
+  h1{
+    margin:0;font-weight:600;letter-spacing:-.025em;color:var(--bone);
+    text-shadow:0 0 40px var(--glow),0 1px 18px rgba(0,0,0,.55);
+    line-height:.95;font-size:clamp(2.5rem,6vw,4.4rem);
+  }
+  .about{
+    font-size:clamp(.8rem,1vw,.92rem);letter-spacing:.03em;line-height:1.72;
+    color:var(--fog);margin:0;max-width:40ch;
+    text-shadow:0 1px 14px rgba(0,0,0,.5);
+  }
+  :root[data-theme="light"] h1,
+  :root[data-theme="light"] .about,
+  :root[data-theme="light"] .vrow,
+  :root[data-theme="light"] .mail-link{
+    text-shadow:0 1px 12px rgba(255,255,255,.65);
+  }
+  @media (prefers-color-scheme:light){
+    :root:not([data-theme="dark"]) h1,
+    :root:not([data-theme="dark"]) .about,
+    :root:not([data-theme="dark"]) .vrow,
+    :root:not([data-theme="dark"]) .mail-link{
+      text-shadow:0 1px 12px rgba(255,255,255,.65);
+    }
+  }
   .label{font-size:.62rem;letter-spacing:.32em;text-transform:uppercase;color:var(--ash)}
   .num{color:var(--ash);opacity:.7}
-  .foot-min{font-size:.58rem;letter-spacing:.2em;text-transform:uppercase;color:var(--ash)}
 
-  .avatar{background:var(--face) center/cover;border-radius:50%;border:1px solid var(--hair);filter:grayscale(1) contrast(1.04) brightness(1.02);transition:filter .55s ease;flex:none;width:clamp(140px,42vw,168px);aspect-ratio:1}
-  .avatar:hover{filter:none}
+  .avatar{
+    background:var(--face) center/cover;border-radius:50%;border:1px solid var(--hair);
+    filter:grayscale(1) contrast(1.04) brightness(1.02);transition:filter .55s ease;
+    flex:none;width:clamp(120px,36vw,152px);aspect-ratio:1;
+  }
 
-  .group{display:flex;flex-direction:column;width:100%}
-  .ghead{display:flex;align-items:baseline;gap:1ch;padding:0 clamp(1rem,3vw,1.5rem) .8rem;border-bottom:1px solid var(--hair);margin-bottom:.1rem}
-  .vrow{display:flex;align-items:baseline;gap:1.2ch;padding:clamp(1rem,2vh,1.5rem) clamp(1rem,3vw,1.5rem);border-bottom:1px solid var(--hair);color:var(--fog);transition:background .25s,color .22s,padding-left .28s}
-  .vrow .idx{font-size:.64rem;letter-spacing:.08em;color:var(--ash);min-width:3.4ch;padding-top:.4em}
-  .vrow .big{font-size:clamp(1.2rem,2.6vw,2.1rem);letter-spacing:-.01em;line-height:1.12}
-  .vrow .meta{margin-left:auto;align-self:center;white-space:nowrap;font-size:.66rem;color:var(--ash);opacity:0;transform:translateX(-.5ch);transition:.25s}
-  .vrow:hover{background:var(--hover);color:var(--bone);padding-left:clamp(1.7rem,4vw,2.6rem)}
-  .vrow:hover .meta{opacity:1;transform:none}
+  /* social icons */
+  .socials{
+    display:flex;flex-wrap:wrap;align-items:center;gap:.55rem;
+  }
+  .icon-link{
+    display:inline-flex;align-items:center;justify-content:center;
+    width:2.35rem;height:2.35rem;border-radius:999px;
+    border:1px solid var(--hair);color:var(--fog);
+    transition:color .2s,border-color .2s,background .2s,transform .2s;
+  }
+  .icon-link svg{width:1.05rem;height:1.05rem;display:block}
+  .mail-link{
+    display:inline-flex;align-items:center;gap:.55rem;
+    font-size:.72rem;letter-spacing:.06em;color:var(--fog);
+    border-bottom:1px solid transparent;padding-bottom:1px;
+    transition:color .2s,border-color .2s;
+  }
 
-  /* ---- layout: centered column (mobile) -> two-column (desktop) ---- */
+  /* layout */
   .wrap{
     position:relative;z-index:1;
-    display:flex;flex-direction:column;align-items:center;text-align:center;
-    gap:clamp(2rem,4.5vh,3rem);
+    display:flex;flex-direction:column;
+    gap:clamp(2rem,5vh,3rem);
     max-width:680px;margin:0 auto;
-    padding:clamp(4rem,9vh,6.5rem) clamp(1.4rem,6vw,2.4rem);
+    padding:clamp(3.5rem,8vh,5.5rem) clamp(1.4rem,5vw,2.2rem) clamp(2.5rem,6vh,4rem);
   }
-  .id2{display:flex;flex-direction:column;align-items:center;gap:clamp(1.2rem,2.8vh,1.9rem)}
-  .id2 .tag{margin-bottom:.2rem}
-  .content{display:flex;flex-direction:column;gap:clamp(2rem,4.6vh,3.3rem);width:100%;text-align:left}
-  .divider{width:100%;height:1px;background:var(--hair)}
-  .foot-min{align-self:center}
+  .id2{
+    display:flex;flex-direction:column;align-items:center;text-align:center;
+    gap:clamp(1rem,2.5vh,1.6rem);
+  }
+  .id-meta{display:flex;flex-direction:column;align-items:center;gap:.9rem}
+  .divider{width:100%;height:1px;background:var(--hair);flex:none}
+
+  .feed{
+    display:flex;flex-direction:column;width:100%;text-align:left;
+    min-height:0;
+  }
+  .feed-list{
+    display:flex;flex-direction:column;
+    /* mobile: natural flow; desktop: scrolls inside column */
+  }
+  .vrow{
+    display:flex;align-items:baseline;gap:1.2ch;
+    padding:clamp(1rem,2.2vh,1.45rem) .15rem;
+    border-bottom:1px solid var(--hair);color:var(--fog);
+    transition:color .22s;
+    text-shadow:0 1px 14px rgba(0,0,0,.45);
+  }
+  .vrow .idx{font-size:.64rem;letter-spacing:.08em;color:var(--ash);min-width:3.4ch;padding-top:.4em}
+  .vrow .big{font-size:clamp(1.15rem,2.4vw,1.85rem);letter-spacing:-.01em;line-height:1.15}
+  .vrow .meta{
+    margin-left:auto;align-self:center;white-space:nowrap;
+    font-size:.66rem;color:var(--ash);
+    opacity:0;transform:translateX(-.5ch);transition:.25s;
+  }
+  .mail-link{text-shadow:0 1px 12px rgba(0,0,0,.4)}
+
+  /* Hover affordances only on fine pointers (not touch/mobile). */
+  @media (hover:hover) and (pointer:fine){
+    .avatar:hover{filter:none}
+    .icon-link:hover{
+      color:var(--bone);border-color:var(--bone);background:var(--hover);
+      transform:translateY(-1px);
+    }
+    .mail-link:hover{color:var(--bone);border-bottom-color:var(--hair)}
+    .vrow:hover{color:var(--bone)}
+    .vrow:hover .meta{opacity:1;transform:none}
+  }
 
   @media (min-width:900px){
+    body{overflow:hidden;height:100%}
     .wrap{
-      display:grid;grid-template-columns:minmax(320px,34%) 1fr;
-      grid-template-areas:"id content";
-      align-items:center;justify-items:start;text-align:left;
-      gap:clamp(3.5rem,7vw,8rem);
-      max-width:1680px;min-height:100svh;
-      padding:clamp(3.5rem,7vh,6.5rem) clamp(2.5rem,6vw,7rem);
+      display:grid;
+      grid-template-columns:minmax(300px,34%) minmax(0,1fr);
+      grid-template-rows:1fr;
+      grid-template-areas:"id feed";
+      align-items:stretch;justify-items:stretch;text-align:left;
+      gap:clamp(3rem,6vw,7rem);
+      max-width:1680px;height:100svh;margin:0 auto;
+      padding:clamp(2.8rem,6vh,5.5rem) clamp(2.2rem,5.5vw,6.5rem);
     }
-    .id2{grid-area:id;align-items:flex-start;text-align:left;align-self:center}
-    .content{grid-area:content;align-self:center}
-    .avatar{width:clamp(140px,14vw,196px)}
+    .id2{
+      grid-area:id;align-items:flex-start;text-align:left;
+      justify-content:center;align-self:stretch;
+      min-height:0;
+    }
+    .id-meta{align-items:flex-start}
+    .avatar{width:clamp(132px,13vw,180px)}
     .divider{display:none}
-    .foot-min{align-self:flex-start}
-    .id2 .foot-min{margin-top:.4rem}
+    .feed{
+      grid-area:feed;
+      min-height:0;height:100%;
+      justify-content:center; /* few items: sit mid-column; scrolls if list grows */
+    }
+    .feed-list{
+      flex:0 1 auto;
+      max-height:100%;
+      min-height:0;
+      width:100%;
+      overflow-y:auto;overscroll-behavior:contain;
+      -webkit-overflow-scrolling:touch;
+      scrollbar-width:thin;
+      scrollbar-color:var(--hair) transparent;
+      padding-right:.35rem;
+    }
   }
 
-  @media (prefers-reduced-motion:reduce){*{transition:none!important}}
+  @media (prefers-reduced-motion:reduce){
+    *{transition:none!important}
+  }
 </style>
 </head>
 <body>
 <canvas id="bg" aria-hidden="true"></canvas>
 
 <main class="wrap">
-  <div class="id2">
-    <div class="avatar"></div>
+  <section class="id2" aria-label="About">
+    <div class="avatar" role="img" aria-label="Portrait of Lucas Nunn"></div>
     <h1>Lucas Nunn</h1>
     <p class="about">I'm interested in minds, brains, computers, contemplation, and metta. I study cognitive neuroscience at FU&nbsp;Berlin and work on neurofeedback at Neurosphere.</p>
-  </div>
+    <div class="id-meta">
+      <nav class="socials" aria-label="Elsewhere">
+        <a class="icon-link" href="https://x.com/lucas_nunn87730" target="_blank" rel="noopener noreferrer" aria-label="X (Twitter)">
+          <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.744l7.727-8.835L1.254 2.25H8.08l4.253 5.622L18.244 2.25zm-1.161 17.52h1.833L7.084 4.126H5.117L17.083 19.77z"/></svg>
+        </a>
+        <a class="icon-link" href="https://github.com/lucas-nunn" target="_blank" rel="noopener noreferrer" aria-label="GitHub">
+          <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2C6.477 2 2 6.486 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.009-.866-.013-1.7-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0 1 12 6.844a9.59 9.59 0 0 1 2.504.337c1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.02 10.02 0 0 0 22 12.017C22 6.486 17.523 2 12 2z"/></svg>
+        </a>
+        <a class="icon-link" href="https://www.linkedin.com/in/lnunn/" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn">
+          <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 0 1-2.063-2.065 2.064 2.064 0 1 1 2.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+        </a>
+      </nav>
+      <a class="mail-link" href="mailto:me@lucasnunn.com">me@lucasnunn.com</a>
+    </div>
+  </section>
 
-  <div class="divider"></div>
+  <div class="divider" aria-hidden="true"></div>
 
-  <div class="content">
-    <div class="group">
-      <div class="ghead"><span class="label"><span class="num">01</span>&nbsp;&nbsp;Projects</span></div>
-      <a class="vrow" href="https://github.com/lucas-nunn/PSM-NeuroAI-Final"><span class="idx">P01</span><span class="big">Beta-VAE Cortical Alignment</span><span class="meta">PSM-NeuroAI-Final ↗</span></a>
-      <a class="vrow" href="https://github.com/lucas-nunn/visuo_llm_ram_rescue"><span class="idx">P02</span><span class="big">Vision-Language Brain Alignment</span><span class="meta">visuo_llm_ram_rescue ↗</span></a>
+  <section class="feed" aria-label="Work">
+    <div class="feed-list">
+      <a class="vrow" href="https://github.com/lucas-nunn/PSM-NeuroAI-Final" target="_blank" rel="noopener noreferrer">
+        <span class="idx">P01</span>
+        <span class="big">Beta-VAE Cortical Alignment</span>
+        <span class="meta">GitHub ↗</span>
+      </a>
+      <a class="vrow" href="https://github.com/lucas-nunn/visuo_llm_ram_rescue" target="_blank" rel="noopener noreferrer">
+        <span class="idx">P02</span>
+        <span class="big">Vision-Language Brain Alignment</span>
+        <span class="meta">GitHub ↗</span>
+      </a>
     </div>
-    <div class="group">
-      <div class="ghead"><span class="label"><span class="num">02</span>&nbsp;&nbsp;Elsewhere</span></div>
-      <a class="vrow" href="https://x.com/lucas_nunn87730"><span class="idx">→</span><span class="big">X</span><span class="meta">@lucas_nunn87730 ↗</span></a>
-      <a class="vrow" href="https://github.com/lucas-nunn"><span class="idx">→</span><span class="big">GitHub</span><span class="meta">@lucas-nunn ↗</span></a>
-      <a class="vrow" href="https://www.linkedin.com/in/lnunn/"><span class="idx">→</span><span class="big">LinkedIn</span><span class="meta">in/lnunn ↗</span></a>
-    </div>
-    <div class="group">
-      <div class="ghead"><span class="label"><span class="num">03</span>&nbsp;&nbsp;Contact</span></div>
-      <a class="vrow" href="mailto:me@lucasnunn.com"><span class="idx">→</span><span class="big">me@lucasnunn.com</span><span class="meta">email ↗</span></a>
-    </div>
-  </div>
+  </section>
 </main>
 
 <script>
-(function(){
-  var c=document.getElementById('bg'), cx2=c.getContext('2d');
-  var mqLight=matchMedia('(prefers-color-scheme: light)');
-  function isLight(){var dt=document.documentElement.getAttribute('data-theme');return dt?dt==='light':mqLight.matches;}
-  function draw(){
-    var w=c.width=innerWidth, h=c.height=innerHeight, light=isLight();
-    var img=cx2.createImageData(w,h), d=img.data, idx=0;
-    var bx=w*0.98, by=-h*0.12, diag=Math.hypot(w,h), D2=(diag*0.6)*(diag*0.6);
-    for(var y=0;y<h;y++){for(var x=0;x<w;x++){
-      var t=0.56*(x/w)+0.44*(1-y/h), r,g,b,L;
-      if(light){L=204+38*t;L+=(Math.random()-0.5)*7;if(L<0)L=0;else if(L>255)L=255;r=L;g=L*0.994;b=L*0.973;}
-      else{var dx=x-bx,dy=y-by,bloom=Math.exp(-(dx*dx+dy*dy)/D2);L=4+58*t+26*bloom;L+=(Math.random()-0.5)*13;if(L<0)L=0;else if(L>255)L=255;r=L*1.06;g=L*0.98;b=L*0.86;}
-      d[idx]=r>255?255:r;d[idx+1]=g>255?255:g;d[idx+2]=b>255?255:b;d[idx+3]=255;idx+=4;
-    }}
-    cx2.putImageData(img,0,0);
+(function () {
+  // Turing grain background — CPU Gray–Scott + ImageData grain (from demos/01 v3).
+  // Mouse: local RD injection + soft glow parallax. Respects prefers-reduced-motion.
+  var canvas = document.getElementById('bg');
+  if (!canvas || !canvas.getContext) return;
+  var ctx = canvas.getContext('2d', { alpha: false });
+  if (!ctx) return;
+
+  var reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var mqLight = matchMedia('(prefers-color-scheme: light)');
+  // Mouse/touch reactivity only with a fine pointer (desktop). Off on mobile/touch.
+  var mqFine = matchMedia('(hover: hover) and (pointer: fine)');
+  function canMouse() { return !reduced && mqFine.matches; }
+  var mouseOn = canMouse();
+  var paused = reduced;
+  var light = false;
+  var W = 0, H = 0, dpr = 1;
+  var simW = 0, simH = 0;
+  var U, V, U2, V2;
+  var bufCanvas, bufCtx, bW = 0, bH = 0;
+  var paintImg = null; // reused ImageData — avoid alloc every frame
+  var glow = { x: 0.88, y: 0.12, tx: 0.88, ty: 0.12 };
+  var ptr = { x: 0.5, y: 0.5 };
+
+
+  function isLight() {
+    var dt = document.documentElement.getAttribute('data-theme');
+    if (dt === 'light') return true;
+    if (dt === 'dark') return false;
+    return mqLight.matches;
   }
-  draw();
-  var t;addEventListener('resize',function(){clearTimeout(t);t=setTimeout(draw,120);});
-  if(mqLight.addEventListener)mqLight.addEventListener('change',draw);else if(mqLight.addListener)mqLight.addListener(draw);
-  new MutationObserver(draw).observe(document.documentElement,{attributes:true,attributeFilter:['data-theme']});
+
+  function idx(x, y) { return y * simW + x; }
+
+  function seedSim() {
+    var n = simW * simH;
+    U = new Float32Array(n);
+    V = new Float32Array(n);
+    U2 = new Float32Array(n);
+    V2 = new Float32Array(n);
+    for (var i = 0; i < n; i++) { U[i] = 1; V[i] = 0; }
+    var blobs = 28;
+    for (var b = 0; b < blobs; b++) {
+      var cx = (0.15 + Math.random() * 0.7) * simW;
+      var cy = (0.15 + Math.random() * 0.7) * simH;
+      var r = (0.03 + Math.random() * 0.07) * Math.min(simW, simH);
+      for (var y = Math.max(1, cy - r | 0); y < Math.min(simH - 1, cy + r); y++) {
+        for (var x = Math.max(1, cx - r | 0); x < Math.min(simW - 1, cx + r); x++) {
+          var dx = x - cx, dy = y - cy;
+          if (dx * dx + dy * dy < r * r * (0.5 + Math.random() * 0.5)) {
+            var ii = idx(x, y);
+            U[ii] = 0.35; V[ii] = 0.85 + Math.random() * 0.15;
+          }
+        }
+      }
+    }
+    for (var j = 0; j < n; j++) {
+      if (Math.random() < 0.004) { U[j] = 0.4; V[j] = 1; }
+    }
+  }
+
+  function stepSim(steps) {
+    var f = 0.026, k = 0.055, Du = 0.2, Dv = 0.1, dt = 1.0;
+    for (var s = 0; s < steps; s++) {
+      for (var y = 1; y < simH - 1; y++) {
+        for (var x = 1; x < simW - 1; x++) {
+          var i = idx(x, y);
+          var u = U[i], v = V[i];
+          var lapU = U[idx(x - 1, y)] + U[idx(x + 1, y)] + U[idx(x, y - 1)] + U[idx(x, y + 1)] - 4 * u;
+          var lapV = V[idx(x - 1, y)] + V[idx(x + 1, y)] + V[idx(x, y - 1)] + V[idx(x, y + 1)] - 4 * v;
+          var uvv = u * v * v;
+          var nu = u + (Du * lapU - uvv + f * (1 - u)) * dt;
+          var nv = v + (Dv * lapV + uvv - (k + f) * v) * dt;
+          if (nu < 0) nu = 0; else if (nu > 1) nu = 1;
+          if (nv < 0) nv = 0; else if (nv > 1) nv = 1;
+          U2[i] = nu; V2[i] = nv;
+        }
+      }
+      for (var xb = 0; xb < simW; xb++) {
+        U2[idx(xb, 0)] = U2[idx(xb, 1)]; V2[idx(xb, 0)] = V2[idx(xb, 1)];
+        U2[idx(xb, simH - 1)] = U2[idx(xb, simH - 2)]; V2[idx(xb, simH - 1)] = V2[idx(xb, simH - 2)];
+      }
+      for (var yb = 0; yb < simH; yb++) {
+        U2[idx(0, yb)] = U2[idx(1, yb)]; V2[idx(0, yb)] = V2[idx(1, yb)];
+        U2[idx(simW - 1, yb)] = U2[idx(simW - 2, yb)]; V2[idx(simW - 1, yb)] = V2[idx(simW - 2, yb)];
+      }
+      if (mouseOn) {
+        var bx = (ptr.x * (simW - 1)) | 0;
+        var by = (ptr.y * (simH - 1)) | 0;
+        var rad = 4;
+        for (var my = Math.max(1, by - rad); my < Math.min(simH - 1, by + rad); my++) {
+          for (var mx = Math.max(1, bx - rad); mx < Math.min(simW - 1, bx + rad); mx++) {
+            if ((mx - bx) * (mx - bx) + (my - by) * (my - by) <= rad * rad) {
+              var mi = idx(mx, my);
+              V2[mi] = Math.min(1, V2[mi] * 0.5 + 0.55);
+              U2[mi] = Math.max(0, U2[mi] * 0.7);
+            }
+          }
+        }
+      }
+      var tU = U; U = U2; U2 = tU;
+      var tV = V; V = V2; V2 = tV;
+    }
+  }
+
+  function sampleV(nx, ny) {
+    var x = nx * (simW - 1);
+    var y = ny * (simH - 1);
+    var x0 = Math.max(0, Math.min(simW - 2, x | 0));
+    var y0 = Math.max(0, Math.min(simH - 2, y | 0));
+    var fx = x - x0, fy = y - y0;
+    var i00 = idx(x0, y0), i10 = idx(x0 + 1, y0);
+    var i01 = idx(x0, y0 + 1), i11 = idx(x0 + 1, y0 + 1);
+    var a = V[i00] + (V[i10] - V[i00]) * fx;
+    var b = V[i01] + (V[i11] - V[i01]) * fx;
+    return a + (b - a) * fy;
+  }
+
+  function ensureBuf() {
+    bW = Math.max(2, (W / 2) | 0);
+    bH = Math.max(2, (H / 2) | 0);
+    if (!bufCanvas) {
+      bufCanvas = document.createElement('canvas');
+      bufCtx = bufCanvas.getContext('2d', { alpha: false });
+    }
+    if (bufCanvas.width !== bW || bufCanvas.height !== bH) {
+      bufCanvas.width = bW;
+      bufCanvas.height = bH;
+      paintImg = null;
+    }
+  }
+
+  function paintFast() {
+    light = isLight();
+    ensureBuf();
+    glow.x += (glow.tx - glow.x) * 0.05;
+    glow.y += (glow.ty - glow.y) * 0.05;
+
+    if (!paintImg || paintImg.width !== bW || paintImg.height !== bH) {
+      paintImg = bufCtx.createImageData(bW, bH);
+    }
+    var d = paintImg.data;
+    var gx = glow.x * bW;
+    var gy = glow.y * bH;
+    var invR2 = 1 / ((Math.hypot(bW, bH) * 0.55) * (Math.hypot(bW, bH) * 0.55));
+    var tGrain = performance.now() * 0.02;
+
+    for (var y = 0; y < bH; y++) {
+      var row = y * bW;
+      for (var x = 0; x < bW; x++) {
+        var pi = (row + x) * 4;
+        var nx = x / bW, ny = y / bH;
+        var dx = x - gx, dy = y - gy;
+        var glowAmt = Math.exp(-(dx * dx + dy * dy) * invR2);
+        var diag = 0.55 * nx + 0.45 * (1 - ny);
+
+        var v = sampleV(nx, ny);
+        var maze = v > 0.22 ? Math.min(1, (v - 0.22) / 0.5) : 0;
+        var edge = maze * (1 - maze) * 4;
+        var structure = (maze * 0.65 + edge * 0.4) * Math.min(1.15, 0.55 + glowAmt * 0.6 + 0.35);
+
+        var h = Math.sin((x + tGrain) * 12.9898 + y * 78.233) * 43758.5453;
+        h = h - Math.floor(h);
+        var h2 = Math.sin(x * 0.37 + y * 0.19 + tGrain * 0.1) * 991.0;
+        h2 = h2 - Math.floor(h2);
+        var grain = (h - 0.5) * 0.14 + (h2 - 0.5) * 0.06;
+
+        var L;
+        if (light) {
+          L = 0.30 + 0.50 * glowAmt + 0.14 * diag - structure * 0.55 + grain;
+        } else {
+          L = 0.03 + 0.50 * glowAmt + 0.12 * diag + structure * 0.65 + grain;
+        }
+        if (L < 0) L = 0; else if (L > 1) L = 1;
+
+        var r, g, b;
+        if (light) {
+          r = 105 + L * 145 - structure * 30;
+          g = 100 + L * 140 - structure * 26;
+          b = 90 + L * 135 - structure * 20;
+        } else {
+          r = 5 + L * 250;
+          g = 4 + L * 230;
+          b = 3 + L * 200;
+        }
+        d[pi] = r < 0 ? 0 : r > 255 ? 255 : r | 0;
+        d[pi + 1] = g < 0 ? 0 : g > 255 ? 255 : g | 0;
+        d[pi + 2] = b < 0 ? 0 : b > 255 ? 255 : b | 0;
+        d[pi + 3] = 255;
+      }
+    }
+    bufCtx.putImageData(paintImg, 0, 0);
+    ctx.imageSmoothingEnabled = true;
+    ctx.drawImage(bufCanvas, 0, 0, W, H);
+  }
+
+  function resize() {
+    dpr = Math.min(window.devicePixelRatio || 1, 1.5);
+    W = Math.max(2, Math.round(innerWidth * dpr));
+    H = Math.max(2, Math.round(innerHeight * dpr));
+    canvas.width = W;
+    canvas.height = H;
+    var aspect = W / H;
+    var long = 160;
+    if (aspect >= 1) { simW = long; simH = Math.max(48, Math.round(long / aspect)); }
+    else { simH = long; simW = Math.max(48, Math.round(long * aspect)); }
+    seedSim();
+    for (var i = 0; i < 50; i++) stepSim(10);
+  }
+
+  window.addEventListener('pointermove', function (e) {
+    if (!mouseOn) return;
+    ptr.x = e.clientX / Math.max(1, innerWidth);
+    ptr.y = e.clientY / Math.max(1, innerHeight);
+    glow.tx = 0.82 + (ptr.x - 0.5) * 0.22;
+    glow.ty = 0.15 + (ptr.y - 0.5) * 0.18;
+  }, { passive: true });
+
+  window.addEventListener('pointerleave', function () {
+    if (!mouseOn) return;
+    glow.tx = 0.88; glow.ty = 0.12;
+  });
+
+  function onPointerCapability() {
+    mouseOn = canMouse();
+    if (!mouseOn) { glow.tx = 0.88; glow.ty = 0.12; }
+  }
+  if (mqFine.addEventListener) mqFine.addEventListener('change', onPointerCapability);
+  else if (mqFine.addListener) mqFine.addListener(onPointerCapability);
+
+  function frame() {
+    requestAnimationFrame(frame);
+    if (document.hidden) return;
+    if (!paused) {
+      stepSim(4);
+      if (Math.random() < 0.015) {
+        var si = (1 + Math.random() * (simW - 2) | 0) + (1 + Math.random() * (simH - 2) | 0) * simW;
+        V[si] = 1; U[si] = 0.3;
+      }
+    }
+    paintFast();
+  }
+
+  var rt;
+  window.addEventListener('resize', function () {
+    clearTimeout(rt);
+    rt = setTimeout(function () {
+      resize();
+      paintFast();
+    }, 120);
+  });
+
+  if (mqLight.addEventListener) mqLight.addEventListener('change', function () { paintFast(); });
+  else if (mqLight.addListener) mqLight.addListener(function () { paintFast(); });
+  new MutationObserver(function () { paintFast(); }).observe(document.documentElement, {
+    attributes: true, attributeFilter: ['data-theme']
+  });
+
+  try {
+    resize();
+    paintFast();
+    if (!reduced) requestAnimationFrame(frame);
+  } catch (err) {
+    console.warn('Background init failed', err);
+  }
 })();
 </script>
 </body>
