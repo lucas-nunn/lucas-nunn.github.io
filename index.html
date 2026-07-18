@@ -456,8 +456,9 @@
         h = h - Math.floor(h);
         var h2 = Math.sin(x * 0.37 + y * 0.19 + tGrain * 0.1) * 991.0;
         h2 = h2 - Math.floor(h2);
-        var gAmt = useSim ? 0.14 : 0.09;
-        var grain = (h - 0.5) * gAmt + (h2 - 0.5) * (useSim ? 0.06 : 0.04);
+        // Live film grain on all devices; mobile skips RD structure only
+        var gAmt = useSim ? 0.14 : 0.13;
+        var grain = (h - 0.5) * gAmt + (h2 - 0.5) * (useSim ? 0.06 : 0.055);
 
         // Always normal field shading first
         var L;
@@ -569,21 +570,19 @@
     if (!running) return;
     requestAnimationFrame(frame);
     if (document.hidden) return;
-    if (!isDesktop()) {
-      // Mode switched mid-session
-      running = false;
+    if (isDesktop()) {
+      var time = (now - t0) * 0.001;
+      stirField(time);
+      stepSim(4, time);
+      paintFast(true);
+    } else {
+      // Mobile: animated film grain only (no living RD pattern)
       paintFast(false);
-      return;
     }
-    var time = (now - t0) * 0.001;
-    // Motion comes from sim dynamics (stir + param drift), not display wrapping
-    stirField(time);
-    stepSim(4, time);
-    paintFast(true);
   }
 
   function startLoop() {
-    if (running || !isDesktop()) return;
+    if (running || reduced) return;
     running = true;
     t0 = performance.now();
     requestAnimationFrame(frame);
@@ -595,13 +594,13 @@
 
   function onModeChange() {
     resize();
-    if (isDesktop()) {
-      paintFast(true);
-      startLoop();
-    } else {
+    if (reduced) {
       stopLoop();
-      paintFast(false);
+      paintFast(isDesktop());
+      return;
     }
+    paintFast(isDesktop());
+    startLoop();
   }
 
   var rt;
@@ -625,12 +624,8 @@
 
   try {
     resize();
-    if (isDesktop()) {
-      paintFast(true);
-      startLoop();
-    } else {
-      paintFast(false);
-    }
+    paintFast(isDesktop());
+    startLoop(); // grain animates everywhere; RD only when isDesktop()
   } catch (err) {
     console.warn('Background init failed', err);
   }
