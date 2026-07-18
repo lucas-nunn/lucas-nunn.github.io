@@ -422,7 +422,8 @@
     var gx = glow.x * bW;
     var gy = glow.y * bH;
     var invR2 = 1 / ((Math.hypot(bW, bH) * 0.55) * (Math.hypot(bW, bH) * 0.55));
-    var tGrain = performance.now() * 0.02;
+    // Discrete frame seed — re-randomize grain each frame (no spatial scroll)
+    var frameId = (performance.now() * 0.06) | 0;
     var useSim = usePattern && simReady && V;
     // Invert the whole main mouse blob (paint-time only). Soft temporal + rim blend.
     var mpx = ptr.x, mpy = ptr.y;
@@ -452,13 +453,16 @@
           structure = (maze * 0.65 + edge * 0.4) * Math.min(1.15, 0.55 + glowAmt * 0.6 + 0.35);
         }
 
-        var h = Math.sin((x + tGrain) * 12.9898 + y * 78.233) * 43758.5453;
+        // Hash-style grain: time is a seed, not a scroll offset along x
+        var h = Math.sin(x * 12.9898 + y * 78.233 + frameId * 127.1) * 43758.5453;
         h = h - Math.floor(h);
-        var h2 = Math.sin(x * 0.37 + y * 0.19 + tGrain * 0.1) * 991.0;
+        var h2 = Math.sin(x * 39.346 + y * 11.135 + frameId * 91.7) * 23421.631;
         h2 = h2 - Math.floor(h2);
+        var h3 = Math.sin((x * 0.71 + frameId) * 17.13 + y * 23.57) * 9123.4;
+        h3 = h3 - Math.floor(h3);
         // Live film grain on all devices; mobile skips RD structure only
-        var gAmt = useSim ? 0.14 : 0.13;
-        var grain = (h - 0.5) * gAmt + (h2 - 0.5) * (useSim ? 0.06 : 0.055);
+        var gAmt = useSim ? 0.14 : 0.15;
+        var grain = (h - 0.5) * gAmt + (h2 - 0.5) * (useSim ? 0.06 : 0.07) + (h3 - 0.5) * (useSim ? 0.02 : 0.04);
 
         // Always normal field shading first
         var L;
