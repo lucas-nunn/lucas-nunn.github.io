@@ -450,7 +450,7 @@
           var v = sampleV(nx, ny);
           var maze = v > 0.22 ? Math.min(1, (v - 0.22) / 0.5) : 0;
           var edge = maze * (1 - maze) * 4;
-          structure = (maze * 0.65 + edge * 0.4) * Math.min(1.15, 0.55 + glowAmt * 0.6 + 0.35);
+          structure = (maze * 0.58 + edge * 0.34) * Math.min(1.05, 0.55 + glowAmt * 0.55 + 0.3);
         }
 
         // Hash-style grain: time is a seed, not a scroll offset along x
@@ -461,15 +461,15 @@
         var h3 = Math.sin((x * 0.71 + frameId) * 17.13 + y * 23.57) * 9123.4;
         h3 = h3 - Math.floor(h3);
         // Live film grain on all devices; mobile skips RD structure only
-        var gAmt = useSim ? 0.14 : 0.15;
-        var grain = (h - 0.5) * gAmt + (h2 - 0.5) * (useSim ? 0.06 : 0.07) + (h3 - 0.5) * (useSim ? 0.02 : 0.04);
+        var gAmt = useSim ? 0.11 : 0.12;
+        var grain = (h - 0.5) * gAmt + (h2 - 0.5) * (useSim ? 0.05 : 0.06) + (h3 - 0.5) * (useSim ? 0.015 : 0.03);
 
         // Always normal field shading first
         var L;
         if (light) {
-          L = 0.30 + 0.50 * glowAmt + 0.14 * diag - structure * 0.55 + grain;
+          L = 0.31 + 0.48 * glowAmt + 0.13 * diag - structure * 0.48 + grain;
         } else {
-          L = 0.03 + 0.50 * glowAmt + 0.12 * diag + structure * 0.65 + grain;
+          L = 0.04 + 0.48 * glowAmt + 0.11 * diag + structure * 0.56 + grain;
         }
         if (L < 0) L = 0; else if (L > 1) L = 1;
 
