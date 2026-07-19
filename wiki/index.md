@@ -15,17 +15,17 @@ Agent-first project memory. Not for human consumption.
 | bg-2026-07 | Grainy / dynamical-systems background redesign | **shipped** Turing grain + mouse on live site |
 | layout-2026-07 | Identity icons + scrollable projects feed | shipped (filters deferred) |
 
-## Projects feed (newest → oldest)
+## Projects feed (newest → oldest visually; idx = chrono age)
 
-| idx | Title | URL |
-|-----|--------|-----|
-| P01 | Beta-VAE Cortical Alignment | https://github.com/lucas-nunn/PSM-NeuroAI-Final |
-| P02 | Vision-Language Brain Alignment | https://github.com/lucas-nunn/visuo_llm_ram_rescue |
-| P03 | Variational Vitro | https://github.com/lucas-nunn/ai-sentience-scholars |
+| display | idx | Title | created | URL |
+|---------|-----|--------|---------|-----|
+| top | P03 | Beta-VAE Cortical Alignment | 2026-06-11 | https://github.com/lucas-nunn/PSM-NeuroAI-Final |
+| mid | P02 | Vision-Language Brain Alignment | 2026-05-31 | https://github.com/lucas-nunn/visuo_llm_ram_rescue |
+| bottom | P01 | Variational Vitro | 2026-04-26 | https://github.com/lucas-nunn/ai-sentience-scholars |
 
-- Feed order: newest at top, oldest at bottom
+- Visual order: newest at top, oldest at bottom
+- **P0x indices are chronological** (P01 = oldest), not list position — renumbered 2026-07-19 after wrong P01=top
 - Display titles are human-readable (not raw repo names); README H1 used when clear
-- Added P03 (2026-07-19): repo `ai-sentience-scholars`, free-energy / Isomura–Friston reproduction
 - About: "Neurosphere" links to https://neurosphere.io/ (class `inline-link`, included in blob invert hover)
 - Mobile projects: `.meta` is `display:none` by default (only shown on fine-pointer hover) so invisible "GitHub ↗" no longer squeezes titles left; `.big` is `flex:1;min-width:0` and wraps
 
